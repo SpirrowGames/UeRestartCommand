@@ -2,6 +2,8 @@
 
 An Unreal Engine 5 plugin to easily save, exit, restart Unreal Editor, and compile via Live Coding.
 
+[!['https://youtu.be/K-ZsTbUhANY'](https://github.com/user-attachments/assets/e199e7fb-5cfb-4c54-92cb-234a1dbc9ee6)](https://youtu.be/K-ZsTbUhANY)
+
 ## Features
 
 - **Restart Editor** - Save and then restart the Editor.
