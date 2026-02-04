@@ -1,51 +1,51 @@
 # UE Restart Command
 
-Unreal Editor の保存、終了、再起動、Live Coding コンパイルを簡単に行うための Unreal Engine 5 プラグインです。
+An Unreal Engine 5 plugin to easily save, exit, restart Unreal Editor, and compile via Live Coding.
 
-## 特徴
+## Features
 
-- **Editor 再起動** - 保存してから Editor を再起動
-- **Editor 終了** - 保存してから Editor を終了
-- **Live Coding コンパイル** - Live Coding で .cpp ファイルをコンパイル
-- **パッケージ保存** - 全ての未保存パッケージを保存
+- **Restart Editor** - Save and then restart the Editor.
+- **Exit Editor** - Save and then exit the Editor.
+- **Live Coding Compilation** - Compile .cpp files using Live Coding.
+- **Save Packages** - Save all unsaved packages.
 
-## セットアップ手順
+## Setup Instructions
 
-### 1. リポジトリのクローン
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/SpirrowGames/UeRestartCommand.git
 ```
 
-### 2. プラグインとして追加
+### 2. Add as a Plugin
 
-1. プロジェクトのルートディレクトリに `Plugins` フォルダがない場合は作成します。
-2. クローンした `UeRestartCommand` フォルダを `Plugins` フォルダの中にコピーします。
-3. Unreal Editor を起動し、**Edit > Plugins** から "UE Restart Command" が有効になっていることを確認します。
-4. Output Log に `Unreal Editor Restart Command - Python Module Loaded` が出力されていれば Python モジュールも読み込まれています。
+1. Create a `Plugins` folder in your project's root directory if it doesn't already exist.
+2. Copy the cloned `UeRestartCommand` folder into the `Plugins` folder.
+3. Launch Unreal Editor and ensure "UE Restart Command" is enabled under **Edit > Plugins**.
+4. If `Unreal Editor Restart Command - Python Module Loaded` is output to the Output Log, the Python module has also been loaded.
 
-> このプラグインは Python API を利用しているため、エンジンの標準プラグインである "Python Editor Script Plugin" が有効である必要があります。
+> Since this plugin utilizes the Python API, the engine's standard "Python Editor Script Plugin" must be enabled.
 
-## API について
+## About the API
 
-このプラグインは C++/Blueprint での利用も可能ですが、基本的には Python から外部実行されることを想定しています。
+While this plugin can be used via C++/Blueprints, it is primarily intended to be executed externally from Python.
 
-### C++ クラス: `UEditorRestartLib`
+### C++ Class: `UEditorRestartLib`
 
-Blueprint Function Library として実装されており、Python と Blueprint の両方から利用可能です。
+Implemented as a Blueprint Function Library, accessible from both Python and Blueprints.
 
-| 関数 | 戻り値 | 説明 |
+| Function | Return Value | Description |
 |------|--------|------|
-| `SaveAllDirtyPackages()` | `bool` | 全ての未保存パッケージを保存 |
-| `ExitEditor()` | `void` | Editor を終了（保存なし） |
-| `RestartEditor()` | `void` | Editor を再起動（保存なし） |
-| `SaveAndExitEditor()` | `void` | 保存してから Editor を終了 |
-| `SaveAndRestartEditor()` | `void` | 保存してから Editor を再起動 |
-| `CompileLiveCoding()` | `bool` | Live Coding でコンパイル |
+| `SaveAllDirtyPackages()` | `bool` | Saves all unsaved packages. |
+| `ExitEditor()` | `void` | Exits the Editor (without saving). |
+| `RestartEditor()` | `void` | Restarts the Editor (without saving). |
+| `SaveAndExitEditor()` | `void` | Saves and then exits the Editor. |
+| `SaveAndRestartEditor()` | `void` | Saves and then restarts the Editor. |
+| `CompileLiveCoding()` | `bool` | Compiles via Live Coding. |
 
-### Python から使用
+### Usage from Python
 
-直接利用する場合は `unreal` パッケージから利用できます。
+You can use it directly via the `unreal` package.
 
 ```py
 import unreal
@@ -69,8 +69,8 @@ unreal.EditorRestartLib.exit_editor()
 unreal.EditorRestartLib.restart_editor()
 ```
 
-また、上記をラップした関数も起動時に自動でロードされます。  
-Output Log の Python コンソールや、他の Pythonスクリプト内から直接呼び出す際に便利です。
+Additionally, wrapper functions are automatically loaded at startup.  
+These are convenient for direct calls from the Output Log Python console or other Python scripts.
 
 ```py
 # Compile LiveCoding
@@ -92,36 +92,36 @@ exit_editor()
 restart_editor()
 ```
 
-### Blueprint から使用
+### Usage from Blueprints
 
-1. Blueprint を開く
-2. 右クリックして "Editor | Restart" カテゴリを探す
-3. 以下の関数が利用可能です：
-   - **Save All Dirty Packages** - 全て保存
-   - **Exit Editor** - 終了
-   - **Restart Editor** - 再起動
-   - **Save And Exit Editor** - 保存して終了
-   - **Save And Restart Editor** - 保存して再起動
-   - **Compile Live Coding** - Live Coding のコンパイル
+1. Open a Blueprint.
+2. Right-click and search for the "Editor | Restart" category.
+3. The following functions are available:
+   - **Save All Dirty Packages**
+   - **Exit Editor**
+   - **Restart Editor**
+   - **Save And Exit Editor**
+   - **Save And Restart Editor**
+   - **Compile Live Coding**
 
-## ue-python-cli との組み合わせ
+## Integration with ue-python-cli
 
-Unreal Editor への外部からの Python スクリプトの実行は標準的な方法 (`UnrealEditor-Cmd.exe` や `Python Remote Execution`) がありますが、[ue-python-cli](https://github.com/self-taught-code-tokushima/ue-python-cli) を利用することもできます。
+While there are standard ways to execute Python scripts in Unreal Editor externally (such as `UnrealEditor-Cmd.exe` or `Python Remote Execution`), you can also use [ue-python-cli](https://github.com/self-taught-code-tokushima/ue-python-cli).
 
-`ue-python-cli` は CLI ツールであるため、Coding Agent からも簡単に利用できます。
+Since `ue-python-cli` is a CLI tool, it can be easily used from Coding Agents.
 
-### ue-python-cli の使い方
+### How to use ue-python-cli
 
 ```bash
-# ツールとしてインストールして利用
+# Install as a tool and use
 uv tool install git+https://github.com/self-taught-code-tokushima/ue-python-cli 
 ue-python exec %python code%
 
-# uvx で直接実行
+# Run directly with uvx
 uvx --from git+https://github.com/self-taught-code-tokushima/ue-python-cli ue-python exec %python code%
 ```
 
-### 関数の実行
+### Executing Functions
 
 ```bash
 # Hot Reload (CompileLiveCoding)
@@ -143,13 +143,13 @@ ue-python exec "exit_editor()"
 ue-python exec "restart_editor()"
 ```
 
-## プロジェクト構造
+## Project Structure
 
 ```
 UeRestartCommand/
 ├── Content/
 │   └── Python/
-│       ├── init_unreal.py          # 起動時にラッパー関数をグローバルにロード
+│       ├── init_unreal.py          # Loads wrapper functions globally at startup
 │       ├── compile_live_coding.py
 │       ├── restart_editor.py
 │       └── save_and_exit.py
@@ -157,40 +157,40 @@ UeRestartCommand/
 ├── Source/
 │   └── UeRestartCommand/
 │       ├── Public/
-│       │   └── EditorRestartLib.h  # C++ API ヘッダー
+│       │   └── EditorRestartLib.h  # C++ API Header
 │       ├── Private/
-│       │   ├── EditorRestartLib.cpp         # C++ API 実装
-│       │   └── UeRestartCommand.cpp         # モジュール実装
-│       └── UeRestartCommand.Build.cs        # ビルド設定
-├── UeRestartCommand.uplugin        # プラグイン定義
-└── README.md                       # このファイル
+│       │   ├── EditorRestartLib.cpp         # C++ API Implementation
+│       │   └── UeRestartCommand.cpp         # Module Implementation
+│       └── UeRestartCommand.Build.cs        # Build Configuration
+├── UeRestartCommand.uplugin        # Plugin Definition
+└── README.md                       # This file
 ```
 
-## トラブルシューティング
+## Troubleshooting
 
 ### `AttributeError: module 'unreal' has no attribute 'EditorRestartLib'`
 
-**原因**: プラグインが有効化されていないか、Editor が再起動されていません。
+**Cause**: The plugin is not enabled, or the Editor has not been restarted.
 
-**解決方法**:
-1. Editor で **Edit → Plugins** を開く
-2. "UE Restart Command" を検索して有効化
-3. Editor を再起動
+**Resolution**:
+1. Open **Edit → Plugins** in the Editor.
+2. Search for "UE Restart Command" and enable it.
+3. Restart the Editor.
 
 ### `Live Coding module is not available`
 
-**原因**: Live Coding が無効化されています。
+**Cause**: Live Coding is disabled.
 
-**解決方法**:
-1. Editor で **Edit → Editor Preferences** を開く
-2. **General → Live Coding** を有効化
-3. Editor を再起動
+**Resolution**:
+1. Open **Edit → Editor Preferences** in the Editor.
+2. Enable **General → Live Coding**.
+3. Restart the Editor.
 
-### ビルドエラー: "Cannot open include file"
+### Build Error: "Cannot open include file"
 
-**原因**: 依存モジュールが不足しています。
+**Cause**: Missing dependency modules.
 
-**解決方法**: `UeRestartCommand.Build.cs` に以下が含まれているか確認：
+**Resolution**: Ensure `UeRestartCommand.Build.cs` includes the following:
 ```csharp
 PrivateDependencyModuleNames.AddRange(new string[] {
     "UnrealEd",
@@ -198,12 +198,12 @@ PrivateDependencyModuleNames.AddRange(new string[] {
 });
 ```
 
-## 必要な環境
+## Requirements
 
-- Unreal Engine 5.7 以上
-- Windows 64-bit（現在のビルド設定）
+- Unreal Engine 5.7 or higher
+- Windows 64-bit (current build configuration)
 
-## 参考リンク
+## Reference Links
 
 - [Unreal Engine Python API](https://dev.epicgames.com/documentation/en-us/unreal-engine/PythonAPI)
 - [Live Coding](https://dev.epicgames.com/documentation/en-us/unreal-engine/using-live-coding-to-recompile-unreal-engine-applications-at-runtime)
