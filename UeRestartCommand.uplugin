@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "0.1",
+	"FriendlyName": "UE Restart Command",
+	"Description": "Provides C++ and Python APIs for saving, exiting, restarting Unreal Editor and hot reloading code",
+	"Category": "Editor",
+	"CreatedBy": "",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": true,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "UeRestartCommand",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}
